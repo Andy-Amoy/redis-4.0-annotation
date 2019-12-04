@@ -73,6 +73,7 @@
  * Note that if the timeout is zero (usually from the point of view of
  * commands API this means no timeout) the value stored into 'timeout'
  * is zero. */
+// 根据输入参数，取出最大等待时间
 int getTimeoutFromObjectOrReply(client *c, robj *object, mstime_t *timeout, int unit) {
     long long tval;
 
@@ -97,6 +98,7 @@ int getTimeoutFromObjectOrReply(client *c, robj *object, mstime_t *timeout, int 
 /* Block a client for the specific operation type. Once the CLIENT_BLOCKED
  * flag is set client query buffer is not longer processed, but accumulated,
  * and will be processed when the client is unblocked. */
+// 对给定的客户端进行阻塞
 void blockClient(client *c, int btype) {
     c->flags |= CLIENT_BLOCKED;
     c->btype = btype;
@@ -106,6 +108,7 @@ void blockClient(client *c, int btype) {
 /* This function is called in the beforeSleep() function of the event loop
  * in order to process the pending input buffer of clients that were
  * unblocked after a blocking operation. */
+// 取消所有在 unblocked_clients 链表中的客户端的阻塞状态
 void processUnblockedClients(void) {
     listNode *ln;
     client *c;
@@ -131,6 +134,7 @@ void processUnblockedClients(void) {
 
 /* Unblock a client calling the right function depending on the kind
  * of operation the client is blocking for. */
+// 取消给定的客户端的阻塞状态
 void unblockClient(client *c) {
     if (c->btype == BLOCKED_LIST) {
         unblockClientWaitingData(c);
@@ -157,6 +161,7 @@ void unblockClient(client *c) {
 /* This function gets called when a blocked client timed out in order to
  * send it a reply of some kind. After this function is called,
  * unblockClient() will be called with the same client as argument. */
+// 等待超时，向被阻塞的客户端返回通知
 void replyToBlockedClientTimedOut(client *c) {
     if (c->btype == BLOCKED_LIST) {
         addReply(c,shared.nullmultibulk);

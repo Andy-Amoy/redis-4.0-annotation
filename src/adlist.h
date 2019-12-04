@@ -56,19 +56,43 @@ typedef struct list {
 } list;
 
 /* Functions implemented as macros */
+// 返回给定链表所包含的节点数量
+// T = O(1)
 #define listLength(l) ((l)->len) //获取链表长度函数
+// 返回给定链表的表头节点
+// T = O(1)
 #define listFirst(l) ((l)->head) //获取链表头节点
+// 返回给定链表的表尾节点
+// T = O(1)
 #define listLast(l) ((l)->tail) //获取链表尾节点
+// 返回给定节点的前置节点
+// T = O(1)
 #define listPrevNode(n) ((n)->prev)//获取前向节点
+// 返回给定节点的后置节点
+// T = O(1)
 #define listNextNode(n) ((n)->next)//获取后向节点
+// 返回给定节点的值
+// T = O(1)
 #define listNodeValue(n) ((n)->value)//获取节点数据
 
+// 将链表 l 的值复制函数设置为 m
+// T = O(1)
 #define listSetDupMethod(l,m) ((l)->dup = (m))//设置拷贝函数
+// 将链表 l 的值释放函数设置为 m
+// T = O(1)
 #define listSetFreeMethod(l,m) ((l)->free = (m))//设置内存释放函数
+// 将链表的对比函数设置为 m
+// T = O(1)
 #define listSetMatchMethod(l,m) ((l)->match = (m))//设置匹配函数
 
+// 返回给定链表的值复制函数
+// T = O(1)
 #define listGetDupMethod(l) ((l)->dup)//获取拷贝函数
+// 返回给定链表的值释放函数
+// T = O(1)
 #define listGetFree(l) ((l)->free)//获取内存释放函数
+// 返回给定链表的值对比函数
+// T = O(1)
 #define listGetMatchMethod(l) ((l)->match)//获取匹配函数
 
 /* Prototypes */
@@ -88,7 +112,11 @@ void listRewind(list *list, listIter *li);//重置迭代器
 void listRewindTail(list *list, listIter *li);//重置迭代器
 void listRotate(list *list);//翻转链表
 
-/* Directions for iterators */
+/* Directions for iterators 
+ *
+ * 迭代器进行迭代的方向
+ */
+// 从表头向表尾进行迭代
 #define AL_START_HEAD 0 //迭代器方向，从链表头开始
 #define AL_START_TAIL 1 //迭代器方向，从链表尾开始
 
